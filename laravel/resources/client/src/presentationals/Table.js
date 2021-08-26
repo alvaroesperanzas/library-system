@@ -61,51 +61,56 @@ const typeMapper = {
 const Tbody = ({data, fields, link, customFields, isResponsive = false, hideLast = false, idField}) => (
   <tbody>
     {
-      data.map((element, index) => 
-        <tr key={index}>
-          {
-            fields.map((field, i) => {
-              const hasCustom =  hasCustomField(field, customFields);
-              const customField = hasCustom[0];
-              const value = _.get(element, field, '');
-              const style = isResponsive && i > 0 ? {display: 'none'} : null;
-              const compoundValue = typeof field == 'string' ?
-                value : ( typeMapper[field.type]({element, field}) );
-
-              return _.isEmpty(customField) ?
-                (
-                  <td
-                    style={style}
-                    key={i}
-                    onClick={
-                      typeof field == 'object' && field.onClick ?
-                      field.onClick(compoundValue): () => {}
-                    }
-                  >
-                    {compoundValue}
-                  </td>
-                ) :
-                (
-                  <td style={style} key={i}>
-                    <customField.tag className={customField.className(value)}>
-                      {compoundValue}
-                    </customField.tag>
-                  </td>
-                )
-            }
-            )
-          }
-          <td style={hideLast ? {display: 'none'} : null}>
+      data.length > 0 ?
+        data.map((element, index) => 
+          <tr key={index}>
             {
-              link &&
-              <Link
-                to={`${link}${idField ? _.get(element, idField, element.id) : element.id}`}
-                className="icon-Adelante"
-              />
+              fields.map((field, i) => {
+                const hasCustom =  hasCustomField(field, customFields);
+                const customField = hasCustom[0];
+                const value = _.get(element, field, '');
+                const style = isResponsive && i > 0 ? {display: 'none'} : null;
+                const compoundValue = typeof field == 'string' ?
+                  value : ( typeMapper[field.type]({element, field}) );
+
+                return _.isEmpty(customField) ?
+                  (
+                    <td
+                      style={style}
+                      key={i}
+                      onClick={
+                        typeof field == 'object' && field.onClick ?
+                        field.onClick(compoundValue): () => {}
+                      }
+                    >
+                      {compoundValue}
+                    </td>
+                  ) :
+                  (
+                    <td style={style} key={i}>
+                      <customField.tag className={customField.className(value)}>
+                        {compoundValue}
+                      </customField.tag>
+                    </td>
+                  )
+              }
+              )
             }
-          </td>
+            <td style={hideLast ? {display: 'none'} : null}>
+              {
+                link &&
+                <Link
+                  to={`${link}${idField ? _.get(element, idField, element.id) : element.id}`}
+                  className="icon-Adelante"
+                />
+              }
+            </td>
+          </tr>
+        )
+      :
+        <tr>
+          <td colSpan={fields.length + 1}>No records found</td>
         </tr>
-      )
     }
   </tbody>
 );

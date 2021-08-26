@@ -42,12 +42,8 @@ function helptext {
   echo "    start             Start the server and it's dependencies."
   echo "    stop              Shut down the server and it's dependencies."
   echo "    nuke              Remove all local resources related to this project."
+  echo "    seed              Seed database with data"
   echo "    test              Run laravel tests"
-}
-
-function pre-commit {
-  info "Pre commit"
-  ${DC} run client npm run lint
 }
 
 function test {
@@ -63,7 +59,6 @@ function db {
 }
 
 function init {
-  # setup_hooks
   ${DC} build
 }
 
@@ -75,7 +70,7 @@ function setup-app {
 
 function seed {
   info "DB seeding"
-  ${DC} exec app php artisan migrate:refresh --seed
+  ${DC} exec app php artisan db:seed
 }
 
 function start {
@@ -102,27 +97,6 @@ function nuke {
 }
 
 
-# If we have a pre-commit hook and the pre-commit hook does not equal what we
-# want it to equal for this project then back it up with a timestamped file
-# name and create a new pre-commit hook.
-function setup_hooks {
-  if [ -f .git/hooks/pre-commit ]; then
-    current_pre_commit_hook=$(cat .git/hooks/pre-commit)
-    expected_pre_commit_hook=$'#!/bin/sh\n\n./go pre-commit'
-
-    if [ "$current_pre_commit_hook" != "$expected_pre_commit_hook" ]; then
-      mv .git/hooks/pre-commit .git/hooks/$(date '+%Y%m%d%H%M%S').pre-commit.old
-    fi
-  fi
-
-  cat > .git/hooks/pre-commit <<EOS
-#!/bin/sh
-
-./go pre-commit
-EOS
-  chmod +x .git/hooks/pre-commit
-}
-
 [[ $@ ]] || { helptext; exit 1; }
 
 case "$1" in
@@ -133,8 +107,6 @@ case "$1" in
     start) start
     ;;
     stop) stop
-    ;;
-    pre-commit) pre-commit
     ;;
     env) env
     ;;
