@@ -1,0 +1,12 @@
+From node:14.16.1
+WORKDIR /usr/src/app
+
+ENV PATH /usr/src/app/node_modules/.bin:$PATH
+
+COPY package.json /usr/src/app/package.json
+
+ADD ./entrypoint.client /usr/bin/entrypoint
+
+ENTRYPOINT ["entrypoint"]
+
+CMD ["npm", "run", "watch"]

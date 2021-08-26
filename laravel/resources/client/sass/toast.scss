@@ -1,0 +1,30 @@
+.toast {
+  min-height: 40px;
+  height: auto;
+  box-shadow: 0 1px 2px 0 rgba(74,80,84,0.08);
+  color: #FFF;
+  position: fixed;
+  top: 60px;
+  left: 0;
+  width: 100%;
+  z-index: 4;
+  text-align: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  opacity: 1;
+  transition: opacity .5s ease-in-out;
+
+  &.success {
+    background-color: #50D86B;
+  }
+
+  &.error {
+    background-color: #DB3A9C;
+  }
+}
+
+.toast .icon-x {
+  padding: 0 15px;
+  cursor: pointer;
+}

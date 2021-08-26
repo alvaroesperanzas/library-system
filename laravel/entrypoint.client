@@ -1,0 +1,10 @@
+#!/bin/bash
+
+set -e
+
+cd /usr/src/app
+export PATH="${PWD}/node_modules/.bin":$PATH
+echo "npm install"
+npm install
+
+exec "$@"

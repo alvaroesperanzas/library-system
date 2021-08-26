@@ -1,0 +1,130 @@
+.left {
+  float: left;
+}
+
+.right {
+  float: right;
+}
+
+.center {
+  text-align: center;
+}
+
+.padding-space {
+  padding: 20px 0;
+}
+
+.buttons-space {
+  margin: 0 10px;
+}
+
+.contenedor-el {
+  &.invalid {
+    input {
+      border-color: #c00;
+    }
+  }
+
+  &.valid {
+    input {
+      border-color: #00aa6c; 
+    }
+  }
+}
+
+.custom-autocomplete {
+  width: 100%;
+  border: 1px solid #ced8dc;
+  background-color: #FFF;
+  border-radius: 4px;
+  align-items: center;
+  margin-top: 5px;
+
+  & > div {
+    width: 100%;
+    height: 45px;
+  }
+
+  .item {
+    text-align: left;
+    font-size: 1.2em;
+    padding: 4px 0;
+    padding-left: 15px;
+    color: #000;
+    cursor: pointer;
+  }
+
+  input {
+    padding-left: 10px;
+    border: none;
+    width: 100%;
+    height: 100%;
+  }
+
+  &.valid {
+    border-color: #00aa6c; 
+  }
+
+  &.invalid {
+    border-color: #c00;
+  }
+}
+
+.title-form {
+  font-size: 0.85rem;
+  font-family: 'SFUIDisplay-Medium';
+  color: rgba(0, 0, 0, 0.87);
+  margin-bottom: 5px;
+}
+
+.categories-book-list {
+  padding: 0;
+
+  li {
+    list-style-type: none;
+    padding: 3px 0;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  button {
+    background: transparent;
+    border: none;
+    font-size: 1.4em;
+    cursor: pointer;
+  }
+}
+
+.modal-component {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0, .5);
+  z-index: 10;
+  top: 0;
+  right: 0;
+
+  .container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+
+    & > .center {
+      background: #FFF;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      margin: auto;
+      width: 80%;
+      height: 50%;
+      overflow: scroll;
+      z-index: 11;
+    }
+  }
+
+  form {
+    padding: 0 15px;
+  }
+}

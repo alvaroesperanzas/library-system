@@ -1,0 +1,74 @@
+version: '3.7'
+services:
+  # PHP Service
+  app:
+    build:
+      args:
+        user: maruan
+        uid: 1000
+      context: ./laravel
+      dockerfile: ./Dockerfile.app
+    working_dir: /var/www/
+    volumes:
+      - ./laravel:/var/www
+    depends_on:
+      - db
+    networks:
+      - mynetwork
+    
+  #Nginx Service
+  nginx:
+    image: nginx:alpine
+    restart: unless-stopped
+    tty: true
+    ports:
+      - 8000:80
+    volumes:
+      - ./laravel:/var/www
+      - ./nginx/conf.d:/etc/nginx/conf.d/
+    depends_on:
+      - app
+    networks:
+      - mynetwork
+  # Database Service
+
+  db:
+    image: mysql:5.7.22
+    container_name: db
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: library_db
+      MYSQL_ROOT_PASSWORD: library
+      MYSQL_USER: library_user
+      MYSQL_PASSWORD: library
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+    volumes:
+      - dbdata:/var/lib/mysql
+      - ./mysql/my.cnf:/etc/mysql/my.cnf
+    networks:
+      - mynetwork
+
+  #Javascript
+  client:
+    build:
+      context: ./laravel
+      dockerfile: ./Dockerfile.client
+    networks:
+      - mynetwork
+    volumes:
+      - ./laravel:/usr/src/app
+    depends_on:
+      - nginx
+
+networks:
+  mynetwork:
+    driver: bridge
+
+#Volumes
+volumes:
+  dbdata:
+    driver: local
