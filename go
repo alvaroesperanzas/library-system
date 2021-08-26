@@ -42,7 +42,6 @@ function helptext {
   echo "    start             Start the server and it's dependencies."
   echo "    stop              Shut down the server and it's dependencies."
   echo "    nuke              Remove all local resources related to this project."
-  echo "    lint              Lint the javascript code."
   echo "    test              Run laravel tests"
 }
 

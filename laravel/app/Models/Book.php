@@ -22,4 +22,8 @@ class Book extends Model
     return $this->hasOne(BookRecord::class)
       ->whereNull('delivered_at');
   }
+
+  public function records() {
+    return $this->hasMany(BookRecord::class)->orderBy('created_at', 'ASC');
+  }
 }

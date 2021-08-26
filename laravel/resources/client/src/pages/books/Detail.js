@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {Link, withRouter} from 'react-router-dom';
 import moment from 'moment';
+import Pagination from "react-js-pagination";
 
 // Services
 import BooksService from '../../services/BooksService';
@@ -10,12 +11,16 @@ import { EXTEND_DATE_FORMAT, DATE_FORMAT } from '../../helpers/constants';
 import Loading from '../../presentationals/Loading';
 import DetailRow from '../../presentationals/DetailRow';
 import Toast from '../../presentationals/Toast';
+import Table from '../../presentationals/Table';
 
 class Detail extends Component {
   constructor(props) {
     super(props);
     this.state = {
       book: {},
+      records: [],
+      page: 1,
+      count: 0,
       showToast: false,
       isLoading: true,
       message: '',
@@ -25,6 +30,7 @@ class Detail extends Component {
     this.fetchData = this.fetchData.bind(this);
     this.deleteBook = this.deleteBook.bind(this);
     this.removeToast = this.removeToast.bind(this);
+    this.handlePageChange = this.handlePageChange.bind(this);
   }
 
   async componentDidMount() {
@@ -36,9 +42,14 @@ class Detail extends Component {
     this.setState({
       isLoading: true,
     });
-    const book = await BooksService.get(id);
+    const [book, result] = await Promise.all([
+      BooksService.get(id),
+      BooksService.records(id)
+    ]);
     this.setState({
       book,
+      records: result.data,
+      count: result.total,
       isLoading: false,
     });
   }
@@ -60,6 +71,18 @@ class Detail extends Component {
     }
   }
 
+  async handlePageChange(page) {
+    this.setState({isLoading: true});
+    const {id} = this.props.match.params;
+    const result = await BooksService.records(id, page);
+    this.setState({
+      records: result.data,
+      count: result.total,
+      page,
+      isLoading: false
+    });
+  }
+
   removeToast() {
     this.setState({showToast: false});
   }
@@ -71,6 +94,9 @@ class Detail extends Component {
       book,
       message,
       type,
+      records,
+      count,
+      page,
     } = this.state;
   
     return (
@@ -112,11 +138,45 @@ class Detail extends Component {
                     title="Publication Date"
                     text={moment(book.publication_date).format(EXTEND_DATE_FORMAT)}
                   />
+                  {
+                    book.record ?
+                    <DetailRow
+                      title="Borrowed by"
+                      text={book.record.user.name}
+                    />
+                    : undefined
+                  }
                 </div>
               </td>
             </tr>
           </tbody>
         </table>
+        <h4>History</h4>
+        <div className="table-container">
+          <Table
+            headers={[
+              'Name',
+              'Borrowed At',
+              'Delivered At'
+            ]}
+            hideLastHeader={true}
+            data={records}
+            fields={[
+              'user.name',
+              'borrowed_at',
+              'delivered_at'
+            ]}
+          />
+        </div>
+        <nav className="paginado">
+          <Pagination
+            activePage={page}
+            itemsCountPerPage={10}
+            totalItemsCount={count}
+            pageRangeDisplayed={5}
+            onChange={this.handlePageChange.bind(this)}
+          />
+        </nav>
         <div className="center padding-space">
           <Link
             to={`/books/edit/${book.id}`}

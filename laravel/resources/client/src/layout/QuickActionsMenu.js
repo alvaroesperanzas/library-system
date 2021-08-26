@@ -5,15 +5,21 @@ const QuickActionsMenu = ({toggle}) => (
   <nav className="menu-header" data-menuheader="accionrapida">
     <ul>
         <li>
-          <Link to="/books/create">
+          <Link onClick={toggle} to="/books/create">
             <div><span className="icon-CrearComprobante"></span></div>
             <div>Add books</div>
           </Link>
         </li>
         <li>
-          <Link to="/categories/create">
+          <Link onClick={toggle} to="/categories/create">
             <div><span className="icon-CrearComprobante"></span></div>
             <div>Add a categories</div>
+          </Link>
+        </li>
+        <li>
+          <Link onClick={toggle} to="/">
+            <div><span className="icon-CrearComprobante"></span></div>
+            <div>Dashboard</div>
           </Link>
         </li>
       </ul>

@@ -114,14 +114,16 @@ export default class List extends Component {
             headers={[
               'Name',
               'Author',
-              'Publication Date'
+              'Publication Date',
+              'Borrowed'
             ]}
             hideLastHeader={true}
             data={books}
             fields={[
               'name',
               'author',
-              'publication_date'
+              'publication_date',
+              'record.borrowed_at'
             ]}
             link={'/books/detail/'}
             links={[

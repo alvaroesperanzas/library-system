@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 
 // Components
-import UserMenu from './UserMenu';
 import QuickActionsMenu from './QuickActionsMenu';
 import UserProvider from '../providers/UserProvider';
 
@@ -13,19 +12,9 @@ class Header extends Component {
 
     this.state = {
       isQuickActionsOpen: false,
-      isProfileMenuOpen: false
     };
 
-    this.toggleProfileMenu = this.toggleProfileMenu.bind(this);
     this.toggleQuickAction = this.toggleQuickAction.bind(this);
-  }
-
-  toggleProfileMenu(){
-    const {isProfileMenuOpen} = this.state;
-    this.setState({
-      isProfileMenuOpen: !isProfileMenuOpen,
-      isQuickActionsOpen: false
-    });
   }
 
   toggleQuickAction(){
@@ -40,7 +29,6 @@ class Header extends Component {
     const {user} = this.context;
     const {
       isQuickActionsOpen,
-      isProfileMenuOpen,
     } = this.state;
     return (
     <header className="template-header">
@@ -66,14 +54,9 @@ class Header extends Component {
     		<a data-accion="usuario" className="accion-usuario" onClick={this.toggleProfileMenu}>
     			Hi,
     			<div className="wrap usuario-nombre">{` ${user.name}`}</div>
-    			<span className="icon-DropdownMenu"></span>
-    		</a>
-    		<a data-accion="usuario" className="accion-usuario-responsivo">
-    			<span className="icon-MiContador"></span>
     		</a>
     	</div>
       {(isQuickActionsOpen)? <QuickActionsMenu toggle={this.toggleQuickAction} /> : null}
-      {(isProfileMenuOpen)? <UserMenu toggle={this.toggleProfileMenu}/> : null}
     </header>
     );
   }

@@ -66,7 +66,6 @@ export default class List extends Component {
               'name',
               'email',
             ]}
-            link={'/users/detail/'}
             links={[
               <Link key={1} to="/users/create">Add User</Link>
             ]}

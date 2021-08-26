@@ -27,7 +27,9 @@ class BooksController extends Controller
   }
 
   public function list(Request $request) {
-    $books = Book::whereNull('deleted_at');
+    $books = Book::with('record')
+      ->whereNull('deleted_at');
+      
     $books = FilterHelper::appendFilters(
       $books,
       [['name', 'like'], ['author', 'like']],
@@ -92,8 +94,17 @@ class BooksController extends Controller
   }
 
   public function detail($id) {
-    $book = Book::find($id);
+    $book = Book::with('record.user')->find($id);
     return response()->json($book);
+  }
+
+  public function records(Request $request, $id) {
+    $records = BookRecord::where('book_id', $id)
+      ->with('user')
+      ->orderBy('created_at', 'DESC')
+      ->paginate(10);
+    
+    return response()->json($records);
   }
 
   public function edit(Request $request) {

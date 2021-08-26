@@ -14,10 +14,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// actions
 Route::get('/borrowed', 'BooksController@borrowed');
 Route::post('/borrow-book', 'BooksController@borrow');
 Route::post('/deliver-book', 'BooksController@deliver');
 Route::get('/books-available', 'BooksController@availableList');
+
+// Records
+Route::get('/records/{id}', 'BooksController@records');
+
 Route::get('/books', 'BooksController@list');
 Route::get('/books/{id}', 'BooksController@detail');
 Route::delete('/books/{id}', 'BooksController@delete');

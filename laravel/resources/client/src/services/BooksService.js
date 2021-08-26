@@ -41,6 +41,16 @@ class BooksService {
     }
   }
 
+  async records(id, page) {
+    try {
+      const response = await get(`/api/records/${id}?${page ? `page=${page}` : '' }`);
+      return response;
+    } catch (err) {
+      console.log(err);
+      throw err;
+    }
+  }
+
   async borrowed(page) {
     try {
       const response = await get(`/api/borrowed?page=${page}`);
