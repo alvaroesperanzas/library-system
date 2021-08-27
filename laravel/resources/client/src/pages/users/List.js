@@ -52,7 +52,13 @@ export default class List extends Component {
       <section className="vistas">
         {isLoading && <Loading absolute={true} />}
         <div className="filtros">
-          
+          <Link
+            to="/users/create"
+            className="boton right"
+          >
+            Add a User
+          </Link>
+          <div className="clear" />
         </div>
         <div className="table-container">
           <Table

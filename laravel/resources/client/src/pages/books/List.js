@@ -89,25 +89,35 @@ export default class List extends Component {
     return (
       <section className="vistas">
         {isLoading && <Loading absolute={true} />}
-        <div className="filtros">
-          <InputFilter
-            name="Name"
-            value={filters['name']}
-            onChange={this.onChangeFilter('name')}
-            size="ancho20"
-          />
-          <InputFilter
-            name="Author"
-            value={filters['author']}
-            onChange={this.onChangeFilter('author')}
-            size="ancho20"
-          />
-          <button
-              className="boton right"
+        <div className="filtros action">
+          <div className="">
+            <InputFilter
+              name="Name"
+              value={filters['name']}
+              onChange={this.onChangeFilter('name')}
+              size="ancho40"
+            />
+            <InputFilter
+              name="Author"
+              value={filters['author']}
+              onChange={this.onChangeFilter('author')}
+              size="ancho40"
+            />
+            <button
+              className="boton"
               onClick={this.onFilter}
             >
               Filter
             </button>
+          </div>
+          <div>
+            <Link
+              to="/books/create"
+              className="boton"
+            >
+              Add a Book
+            </Link>
+          </div>
         </div>
         <div className="table-container">
           <Table

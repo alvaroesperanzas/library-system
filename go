@@ -38,7 +38,7 @@ function helptext {
   info "Usage: ./go <command>"
   echo ""
   info "Available commands are:"
-  echo "    init              Setup the project on your development machine."
+  echo "    build              Setup the project on your development machine."
   echo "    start             Start the server and it's dependencies."
   echo "    stop              Shut down the server and it's dependencies."
   echo "    nuke              Remove all local resources related to this project."
@@ -50,15 +50,11 @@ function test {
   ${DC} run --rm app php artisan test
 }
 
-function lint {
-  ${DC} run client npm run lint
-}
-
 function db {
   ${DC} exec app php artisan tinker
 }
 
-function init {
+function build {
   ${DC} build
 }
 
@@ -102,7 +98,7 @@ function nuke {
 case "$1" in
     help) helptext
     ;;
-    init) init
+    build) build
     ;;
     start) start
     ;;
@@ -115,8 +111,6 @@ case "$1" in
     test) test
     ;;
     db) db
-    ;;
-    lint) lint
     ;;
     seed) seed
     ;;
