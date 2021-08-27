@@ -22,8 +22,6 @@ You can start the whole application by doing the following steps (from the top-l
 
 # Tests
 
-For testing I used the `mocha` testing framework, I created integration and unit tests.
-
 To run the tests just run this command:
 ```
 ./go test
