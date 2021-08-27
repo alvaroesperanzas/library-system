@@ -25,8 +25,12 @@ Inside the app you are able to create:
 - Users
 - Categories
 - Books
+
+
 In the Dashboard you are able to `Borrow a Book` choosing the book and the user, this book will be block to borrow until is deliver again.
+
 In the Dashboard you also will be able to `Deliver a Book` just choosing the book (This list will only show the borrowed books).
+
 In the Book details you will see the history of to whom was borrowed it and when.
 
 # Technical Decisions
