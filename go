@@ -47,7 +47,6 @@ function helptext {
 }
 
 function test {
-  # ${DC} run app php artisan migrate:refresh --seed
   ${DC} run --rm app php artisan test
 }
 

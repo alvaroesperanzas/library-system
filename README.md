@@ -20,6 +20,20 @@ You can start the whole application by doing the following steps (from the top-l
 2. Go to [localhost:8000](http://localhost:8000/)
 3. If you see an Encryption Key Not found error please run `./go setup-app`
 
+# Functionalities
+Inside the app you are able to create:
+- Users
+- Categories
+- Books
+In the Dashboard you are able to `Borrow a Book` choosing the book and the user, this book will be block to borrow until is deliver again.
+In the Dashboard you also will be able to `Deliver a Book` just choosing the book (This list will only show the borrowed books).
+In the Book details you will see the history of to whom was borrowed it and when.
+
+# Technical Decisions
+- The visual theme is from my own, not the design perse but I created the react components and css library.
+- The go commands is an implementation I use in all my projects to run with bash and docker.
+- I didn't create an authentication scheme since it was not specified (But I now how to implement it as well).
+- 
 # Tests
 
 To run the tests just run this command:

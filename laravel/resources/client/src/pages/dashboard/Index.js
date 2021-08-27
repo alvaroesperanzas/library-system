@@ -188,6 +188,7 @@ export default class Dasboard extends Component {
               Deliver a Book
             </button>
           </div>
+          <div style={{clear: 'both'}} />
         </div>
         <div className="dashboard-component">
           <Table
