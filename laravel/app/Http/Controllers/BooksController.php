@@ -55,7 +55,7 @@ class BooksController extends Controller
 
     $book = Book::create($validated);
 
-    return response()->json($book);
+    return response()->json($book, 201);
   }
 
   public function borrow(Request $request) {
@@ -63,6 +63,17 @@ class BooksController extends Controller
       'user_id' => 'required',
       'book_id' => 'required',
     ]);
+
+    $borrowed = BookRecord::where('book_id', $request->book_id)
+      ->whereNull('delivered_at')
+      ->get();
+
+    if (count($borrowed) > 0) {
+      return response()->json([
+        'status' => 'error',
+        'message' => 'Book already borrowed'
+      ], 400);
+    }
 
     $record = BookRecord::create([
       'user_id' => $request['user_id'],
